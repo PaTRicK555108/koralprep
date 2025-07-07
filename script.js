@@ -16,7 +16,7 @@
     let scrollTimeout;
     let isProgrammaticScroll = false;
 
-    let currentYear = '2024';
+    let currentYear = '2025';
     let currentSong = null;
     let running = false;
     let autoPlay = true;
@@ -64,8 +64,8 @@
         if (songId === 'null') return;
         currentSong = songId;
         running = false;
-        miaudio.src = `https://cdn.glitch.global/a332d71e-9bb1-42c3-9e5b-f5d862c75553/${songId}1.mp3`; 
-        maudio.src = `https://cdn.glitch.global/a332d71e-9bb1-42c3-9e5b-f5d862c75553/${songId}2.mp3`; 
+        miaudio.src = `files/${songId}1.mp3`; 
+        maudio.src = `files/${songId}2.mp3`; 
         loadLyrics(`/caption/${songId}3.txt`); 
         if (solo.songId !== songId) resetSolo();
         miaudio.muted = false;
