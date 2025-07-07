@@ -36,6 +36,7 @@ function init() {
     maudio.volume = 0.5;
     volumeSlider.value = 50;
     addEventListeners();
+    updateControlsDisabledState();
 }
 
 function addEventListeners() {
@@ -52,6 +53,14 @@ function addEventListeners() {
     soloBtn.addEventListener('click', handleSoloButtonClick);
 }
 
+function updateControlsDisabledState() {
+    const mode = mmaSelect.value;
+    const disabled = (mode === 'null' || mode === '' || mode == null);
+
+    playPauseBtn.disabled = disabled;
+    timeSlider.disabled = disabled;
+}
+
 function handleYearChange(e) {
     currentYear = e.target.value;
 }
@@ -62,14 +71,11 @@ function handleSongChange(e) {
 
     currentSong = songId;
 
-    // نحمّل الكلمات دايمًا
     loadLyrics(`caption/${songId}3.txt`);
 
-    // ما نعملش حاجة قبل ما يختار المستخدم نوع التشغيل
-    if (mmaSelect.value === 'null') return;
+    updateControlsDisabledState();
 
-    // لو اختار cap نعرض الكلمات فقط من غير صوت
-    if (mmaSelect.value === 'cap') return;
+    if (mmaSelect.value === 'null' || mmaSelect.value === 'lyr') return;
 
     running = false;
     miaudio.src = `files/${songId}1.mp3`;
@@ -86,6 +92,8 @@ function handleSongChange(e) {
 
 function handlePlaybackModeChange(e) {
     const mode = e.target.value;
+    updateControlsDisabledState();
+
     if (!currentSong || currentSong === 'null') return;
 
     if (mode === 'mi') {
@@ -98,12 +106,10 @@ function handlePlaybackModeChange(e) {
         pauseAudio();
         return;
     } else {
-        // لو النوع مش معروف أو null نوقف الصوت
         pauseAudio();
         return;
     }
 
-    // لو ملفات الصوت مش محملة، نحمّلها
     if (!miaudio.src || !maudio.src) {
         miaudio.src = `files/${currentSong}1.mp3`;
         maudio.src = `files/${currentSong}2.mp3`;
