@@ -227,7 +227,7 @@ function seekToLyric(time) {
         handleLyricClickForSolo(time);
         return;
     }
-    if (mode == 'lyr') return;
+    if (mmaSelect.value == 'lyr') return;
     miaudio.currentTime = time;
     maudio.currentTime = time;
     if (miaudio.paused) playAudio();
