@@ -62,13 +62,13 @@ function handleSongChange(e) {
 
     currentSong = songId;
 
-    // دايمًا نعرض الكلمات
+    // نحمّل الكلمات دايمًا
     loadLyrics(`caption/${songId}3.txt`);
 
-    // لو لسه ما اختارش النوع، نوقف هنا
+    // ما نعملش حاجة قبل ما يختار المستخدم نوع التشغيل
     if (mmaSelect.value === 'null') return;
 
-    // لو اختار cap نعرض الكلمات فقط
+    // لو اختار cap نعرض الكلمات فقط من غير صوت
     if (mmaSelect.value === 'cap') return;
 
     running = false;
@@ -94,11 +94,16 @@ function handlePlaybackModeChange(e) {
     } else if (mode === 'm') {
         maudio.muted = false;
         miaudio.muted = true;
-    } else if (mode === 'cap') {
+    } else if (mode === 'lyr') {
+        pauseAudio();
+        return;
+    } else {
+        // لو النوع مش معروف أو null نوقف الصوت
         pauseAudio();
         return;
     }
 
+    // لو ملفات الصوت مش محملة، نحمّلها
     if (!miaudio.src || !maudio.src) {
         miaudio.src = `files/${currentSong}1.mp3`;
         maudio.src = `files/${currentSong}2.mp3`;
@@ -249,11 +254,13 @@ function highlightCurrentLyrics() {
         });
     } else {
         let line = document.querySelector(".line");
-        line.classList.add('highlight');
-        if (!isUserScrolling) {
-            isProgrammaticScroll = true;
-            line.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            setTimeout(() => isProgrammaticScroll = false, 50);
+        if(line) {
+            line.classList.add('highlight');
+            if (!isUserScrolling) {
+                isProgrammaticScroll = true;
+                line.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                setTimeout(() => isProgrammaticScroll = false, 50);
+            }
         }
     }
 }
