@@ -66,7 +66,7 @@
         running = false;
         miaudio.src = `files/${songId}1.mp3`; 
         maudio.src = `files/${songId}2.mp3`; 
-        loadLyrics(`/caption/${songId}3.txt`); 
+        loadLyrics(`caption/${songId}3.txt`); 
         if (solo.songId !== songId) resetSolo();
         miaudio.muted = false;
         maudio.muted = true;
