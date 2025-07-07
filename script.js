@@ -97,12 +97,19 @@ function handlePlaybackModeChange(e) {
     if (!currentSong || currentSong === 'null') return;
 
     if (mode === 'mi') {
+        document.querySelector('#play-pause').removeAttribute('disabled')
+        document.querySelector('#time-slider').removeAttribute('disabled')
         maudio.muted = true;
         miaudio.muted = false;
     } else if (mode === 'm') {
+         document.querySelector('#play-pause').removeAttribute('disabled')
+        document.querySelector('#time-slider').removeAttribute('disabled')
         maudio.muted = false;
         miaudio.muted = true;
     } else if (mode === 'lyr') {
+    document.querySelector('#play-pause').setAttribute('disabled', '')
+    document.querySelector('#time-slider').setAttribute('disabled', '')
+
         pauseAudio();
         return;
     } else {
@@ -224,6 +231,7 @@ function seekToLyric(time) {
         handleLyricClickForSolo(time);
         return;
     }
+    if (mode == 'lyr') return;
     miaudio.currentTime = time;
     maudio.currentTime = time;
     if (miaudio.paused) playAudio();
