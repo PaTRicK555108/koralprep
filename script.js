@@ -97,19 +97,15 @@ function handlePlaybackModeChange(e) {
     if (!currentSong || currentSong === 'null') return;
 
     if (mode === 'mi') {
-        document.querySelector('#play-pause').removeAttribute('disabled')
-        document.querySelector('#time-slider').removeAttribute('disabled')
+        document.querySelector('.player').style.display = 'block';
         maudio.muted = true;
         miaudio.muted = false;
     } else if (mode === 'm') {
-         document.querySelector('#play-pause').removeAttribute('disabled')
-        document.querySelector('#time-slider').removeAttribute('disabled')
+        document.querySelector('.player').style.display = 'block';
         maudio.muted = false;
         miaudio.muted = true;
     } else if (mode === 'lyr') {
-    document.querySelector('#play-pause').setAttribute('disabled', '')
-    document.querySelector('#time-slider').setAttribute('disabled', '')
-
+        document.querySelector('.player').style.display = 'none';
         pauseAudio();
         return;
     } else {
